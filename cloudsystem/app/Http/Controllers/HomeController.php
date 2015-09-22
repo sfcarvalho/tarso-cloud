@@ -1,27 +1,12 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Article;
+use App\PhotoAlbum;
+use DB;
 
 class HomeController extends Controller {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders your application's "dashboard" for users that
-	| are authenticated. Of course, you are free to change or remove the
-	| controller as you wish. It is just here to get your app started!
-	|
-	*/
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('auth');
-	}
 
 	/**
 	 * Show the application dashboard to the user.
@@ -30,7 +15,18 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		$articles = Article::with('author')->orderBy('position', 'DESC')->orderBy('created_at', 'DESC')->limit(4)->get();
+
+		$photoAlbums = PhotoAlbum::select(array(
+			'photo_albums.id',
+			'photo_albums.name',
+			'photo_albums.description',
+			'photo_albums.folder_id',
+			DB::raw('(select filename from photos WHERE album_cover=1 AND deleted_at IS NULL and photos.photo_album_id=photo_albums.id LIMIT 1) AS album_image'),
+			DB::raw('(select filename from photos WHERE photos.photo_album_id=photo_albums.id AND deleted_at IS NULL ORDER BY position ASC, id ASC LIMIT 1) AS album_image_first')
+		))->limit(8)->get();
+
+		return view('pages.home', compact('articles', 'photoAlbums'));
 	}
 
 }
