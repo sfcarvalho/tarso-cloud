@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'photoalbum' => 'Photo albums',
-    'numbers_of_items' =>'Number of items',
-    'description' => 'Description',
+    'photoalbum' => 'Albuns',
+    'numbers_of_items' =>'Itens',
+    'description' => 'Descri&ccedil;&atilde;o',
 
 
 ];

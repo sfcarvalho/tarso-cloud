@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
     <div class="page-header">
-        <h2>Home Page</h2>
+        <h2>Principal</h2>
     </div></div>
 
     @if(count($articles)>0)
@@ -29,7 +29,7 @@
 
                             <p>
                                 <a class="btn btn-mini btn-default"
-                                   href="{{URL::to('news/'.$post->slug.'')}}">Read more</a>
+                                   href="{{URL::to('news/'.$post->slug.'')}}">Leia mais</a>
                             </p>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                             <p></p>
 
                             <p>
-                                <span class="glyphicon glyphicon-user"></span> by <span
+                                <span class="glyphicon glyphicon-user"></span> por <span
                                         class="muted">{{ $post->author->name }}</span> | <span
                                         class="glyphicon glyphicon-calendar"></span> {{ $post->created_at }}
                             </p>
